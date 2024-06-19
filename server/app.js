@@ -19,12 +19,23 @@ const io = socketIo(server, {
   }
 });
 
-app.use(cors({
-  origin: ['http://localhost:5173', 'https://restaurant-chatbot.netlify.app/'],
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true
-}));
+// CORS setup
+var whitelist = ['http://localhost:5173', 'https://restaurant-chatbot.netlify.app/'];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // Allow non-browser requests
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true,// Allow credentials
+};
+
+app.use(cors(corsOptions)); 
+
+
 app.use(bodyParser.json());
 app.use(express.json());
 
