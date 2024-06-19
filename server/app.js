@@ -12,7 +12,14 @@ const port = process.env.PORT || 8000;
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: (origin, callback) => {
+      const allowedOrigins = ['http://localhost:5173', 'https://restaurant-chatbot.netlify.app'];
+      if (allowedOrigins.includes(origin) || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
     credentials: true
