@@ -2,7 +2,7 @@ import chatbot from "../assets/chatbot.jpg";
 import { useState, useEffect } from "react";
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:8000');
+const socket = io('https://restaurant-chatbot-bwzj.onrender.com');
 
 const ChatMessage = () => {
     const [message, setMessage] = useState('');
