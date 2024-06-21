@@ -37,14 +37,8 @@ const ChatMessage = () => {
 
            <div className="flex flex-col overflow-y-auto h-screen  justify-center items-center">
             
-            <div className="flex-grow overflow-y-auto  h-screen  max-w-sm m-5 w-full bg-resturantImage bg-no-repeat bg-cover ">
-            {/* <div className="chatbot-options items-center flex flex-col gap-1 justify-around mt-4">
-                    <button onClick={() => handleButtonClick('1')} className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded ">Place Order (1)</button>
-                    <button onClick={() => handleButtonClick('99')} className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Checkout Order (99)</button>
-                    <button onClick={() => handleButtonClick('98')} className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Order History (98)</button>
-                    <button onClick={() => handleButtonClick('97')} className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Current Order (97)</button>
-                    <button onClick={() => handleButtonClick('0')} className="bg-gray-200 hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">Cancel Order (0)</button>
-                </div> */}
+            <div className="flex-grow overflow-y-auto  h-screen  max-w-sm m-5 w-full bg-white shadow-2xl ">
+    
                 <div className="flex flex-col m-4 gap-4 py-4">
                 {chat.map((chat, index) => (
                     <div key={index} className={`flex ${chat.user === 'bot' ? 'justify-start' : 'justify-end'} mb-4`}>
