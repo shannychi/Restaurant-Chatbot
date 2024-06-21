@@ -92,7 +92,7 @@ function handleNumberSelection(selection, sessionId) {
     const selectedMenuItem = restaurantMenu[menuItemIndex];
     orders[sessionId] = orders[sessionId] || [];
     orders[sessionId].push(selectedMenuItem);
-    return `You have selected: ${selectedMenuItem.name}. Anything else you would like to order? (Type '1' to see menu again or '99' to checkout your order.)`;
+    return `You have selected: ${selectedMenuItem.name}. Anything else you would like to order? (Type '11' to see menu again or '99' to checkout your order.)`;
   } else {
     return 'Invalid selection. Please select a valid item number from the menu.';
   }
@@ -128,14 +128,14 @@ io.on('connection', (socket) => {
   console.log(`New client connected: ${socket.id}`);
 
   // Send initial message
-  socket.emit('message', 'Welcome! Please select an option:\n View Menu (1)\n Checkout Order (99)\n Order History (98)\n Current Order (97)\n Cancel Order (0)');
+  socket.emit('message', 'Welcome! Please select an option:\n View Menu (11)\n Checkout Order (99)\n Order History (98)\n Current Order (97)\n Cancel Order (0)');
 
   socket.on('message', async (message) => {
     console.log(`Message from client ${socket.id}: ${message}`);
     let response;
 
     switch (message) {
-      case '1':
+      case '11':
         response = listRestaurantMenu();
         break;
       case '99':
@@ -143,9 +143,9 @@ io.on('connection', (socket) => {
           orderHistory[socket.id] = orderHistory[socket.id] || [];
           orderHistory[socket.id].push(...orders[socket.id]);
           orders[socket.id] = [];
-          response = 'Order placed. Would you like to place a new order? (Type 1 to view menu)';
+          response = 'Order placed. Would you like to place a new order? (Type 11 to view menu)';
         } else {
-          response = 'No order to place. Would you like to place a new order? (Type 1 to view menu)';
+          response = 'No order to place. Would you like to place a new order? (Type 11 to view menu)';
         }
         break;
       case '98':
@@ -192,12 +192,12 @@ async function detectIntent(message, sessionId) {
     const responses = await sessionClient.detectIntent(request);
     const result = responses[0].queryResult;
 
-    if (result.intent.displayName === '1') {
+    if (result.intent.displayName === '11') {
       // Handle placing orders based on Dialogflow intent
       orders[sessionId] = orders[sessionId] || [];
       const fulfillmentText = result.fulfillmentText || 'No items found in order.';
       orders[sessionId].push({ name: fulfillmentText }); // Assuming fulfillmentText represents the ordered item
-      return `You have ordered: ${fulfillmentText}. Anything else you would like to order? (Type '1' to see menu again or 'Checkout Order' to place your order.)`;
+      return `You have ordered: ${fulfillmentText}. Anything else you would like to order? (Type '11' to see menu again or 'Checkout Order' to place your order.)`;
     } else if (result.intent.displayName === '0') {
       // Handle canceling current orders
       orders[sessionId] = [];
